@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 330px;
+  margin-bottom: 20px;
+}
+.field {
+  border: 1px solid gray;
+  padding: 8px 5px;
+  border-radius: 4px;
+}
+.field:focus {
+  border-color: #0982cd;
+}
