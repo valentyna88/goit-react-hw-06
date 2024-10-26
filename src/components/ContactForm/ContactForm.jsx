@@ -3,30 +3,39 @@ import * as Yup from 'yup';
 
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice.js';
 
-const ContactForm = ({ onAdd }) => {
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(3, 'Too short!')
-      .max(50, 'Name must be less than 50 characters')
-      .required('Required'),
-    number: Yup.string()
-      .matches(/^\d{3}-\d{2}-\d{2}$/, 'Phone number format: xxx-xx-xx')
-      .required('Required'),
-  });
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, 'Too short!')
+    .max(50, 'Name must be less than 50 characters')
+    .required('Required'),
+  number: Yup.string()
+    .matches(/^\d{3}-\d{2}-\d{2}$/, 'Phone number format: xxx-xx-xx')
+    .required('Required'),
+});
 
-  const formatPhoneNumber = value => {
-    const cleaned = value.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{0,3})(\d{0,2})(\d{0,2})$/);
+const formatPhoneNumber = value => {
+  const cleaned = value.replace(/\D/g, '');
+  const match = cleaned.match(/^(\d{0,3})(\d{0,2})(\d{0,2})$/);
 
-    if (match) {
-      return [match[1], match[2], match[3]].filter(Boolean).join('-');
-    }
-    return value;
-  };
+  if (match) {
+    return [match[1], match[2], match[3]].filter(Boolean).join('-');
+  }
+  return value;
+};
+
+const ContactForm = () => {
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    onAdd({ id: nanoid(), ...values });
+    dispatch(
+      addContact({
+        ...values,
+        id: nanoid(),
+      })
+    );
     actions.resetForm();
   };
 
