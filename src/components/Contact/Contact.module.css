@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 330px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+.contactInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn {
+  padding: 8px 10px;
+}
